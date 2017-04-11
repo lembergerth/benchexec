@@ -27,7 +27,7 @@ class Tool(benchexec.tools.template.BaseTool):
     """
 
     def executable(self):
-        return util.find_executable('iuv.py')
+        return util.find_executable('run_iuv')
 
 
     def version(self, executable):
