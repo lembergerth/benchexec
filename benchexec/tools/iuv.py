@@ -26,6 +26,16 @@ class Tool(benchexec.tools.template.BaseTool):
     Tool info for IUV (Input Using Verifier) .
     """
 
+    REQUIRED_PATHS= [
+                "iuv.py",
+                "klee.py",
+                "crest.py",
+                "utils.py",
+                "klee",
+                "crest",
+                "run_iuv"
+    ]
+
     def executable(self):
         return util.find_executable('run_iuv')
 
