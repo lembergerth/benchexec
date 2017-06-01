@@ -27,12 +27,10 @@ class Tool(benchexec.tools.template.BaseTool):
     """
 
     REQUIRED_PATHS= [
-                "iuv.py",
-                "klee.py",
-                "crest.py",
-                "utils.py",
+                "iuv",
                 "klee",
                 "crest",
+                "lib",
                 "run_iuv"
     ]
 
@@ -66,8 +64,8 @@ class Tool(benchexec.tools.template.BaseTool):
         and should give some indication of the failure reason
         (e.g., "CRASH", "OUT_OF_MEMORY", etc.).
         """
-        for line in output:
-            if line.startswith('IUV: ERROR: '):
+        for line in reversed(output):
+            if 'ERROR: ' in line:
                 return "ERROR ({0})".format(returncode)
             elif line.startswith('IUV: FALSE'):
                 return result.RESULT_FALSE_REACH
