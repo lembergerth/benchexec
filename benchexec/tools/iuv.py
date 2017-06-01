@@ -73,3 +73,10 @@ class Tool(benchexec.tools.template.BaseTool):
                 return result.RESULT_TRUE
         return result.RESULT_UNKNOWN
 
+    def get_value_from_output(self, lines, identifier):
+      for line in reversed(lines):
+        if identifier in line:
+          start = line.find(':')
+          end = line[start:].find('(', start)
+          return line[start:end].strip()
+      return None
