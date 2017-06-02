@@ -65,7 +65,7 @@ class Tool(benchexec.tools.template.BaseTool):
         (e.g., "CRASH", "OUT_OF_MEMORY", etc.).
         """
         for line in reversed(output):
-            if 'ERROR: ' in line:
+            if 'ERROR:' in line:
                 return "ERROR ({0})".format(returncode)
             elif line.startswith('IUV: FALSE'):
                 return result.RESULT_FALSE_REACH
@@ -76,7 +76,7 @@ class Tool(benchexec.tools.template.BaseTool):
     def get_value_from_output(self, lines, identifier):
       for line in reversed(lines):
         if identifier in line:
-          start = line.find(':')
-          end = line[start:].find('(', start)
+          start = line.find(':') + 1
+          end = line.find('(', start)
           return line[start:end].strip()
       return None
