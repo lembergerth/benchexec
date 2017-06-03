@@ -20,8 +20,8 @@ limitations under the License.
 import benchexec.result as result
 import benchexec.util as util
 import benchexec.tools.template
-import ultimateautomizer as uautomizer
-import cpachecker
+import benchexec.tools.ultimateautomizer as uautomizer
+import benchexec.tools.cpachecker
 
 
 class Tool(benchexec.tools.template.BaseTool):
@@ -29,7 +29,7 @@ class Tool(benchexec.tools.template.BaseTool):
     Tool info for IUV (Input Using Verifier) .
     """
 
-    REQUIRED_PATHS= [
+    REQUIRED_PATHS = [
                 "iuv",
                 "klee",
                 "crest",
