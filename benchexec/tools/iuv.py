@@ -21,7 +21,7 @@ import benchexec.result as result
 import benchexec.util as util
 import benchexec.tools.template
 import benchexec.tools.ultimateautomizer as uautomizer
-import benchexec.tools.cpachecker
+import benchexec.tools.cpachecker as cpachecker
 
 
 class Tool(benchexec.tools.template.BaseTool):
