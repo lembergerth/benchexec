@@ -65,7 +65,7 @@ class Tool(benchexec.tools.template.BaseTool):
         (e.g., "CRASH", "OUT_OF_MEMORY", etc.).
         """
         for line in reversed(output):
-            if 'ERROR:' in line:
+            if line.startswith('ERROR:'):
                 return "ERROR ({0})".format(returncode)
             elif line.startswith('IUV: FALSE'):
                 return result.RESULT_FALSE_REACH
