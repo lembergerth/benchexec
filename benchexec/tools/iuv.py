@@ -35,7 +35,7 @@ class Tool(benchexec.tools.template.BaseTool):
                 "crest",
                 "lib",
                 "run_iuv"
-    ] + ['validators/uautomizer/' + p for p in uautomizer.Tool.REQUIRED_PATHS]
+    ] + ['validators/uautomizer/' + p for p in uautomizer.Tool.REQUIRED_PATHS]\
       + ['validators/cpachecker/' + p for p in cpachecker.Tool.REQUIRED_PATHS]
 
     def executable(self):
