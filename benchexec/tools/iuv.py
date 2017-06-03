@@ -20,6 +20,9 @@ limitations under the License.
 import benchexec.result as result
 import benchexec.util as util
 import benchexec.tools.template
+import ultimateautomizer as uautomizer
+import cpachecker
+
 
 class Tool(benchexec.tools.template.BaseTool):
     """
@@ -32,7 +35,8 @@ class Tool(benchexec.tools.template.BaseTool):
                 "crest",
                 "lib",
                 "run_iuv"
-    ]
+    ] + ['validators/uautomizer/' + p for p in uautomizer.Tool.REQUIRED_PATHS]
+      + ['validators/cpachecker/' + p for p in cpachecker.Tool.REQUIRED_PATHS]
 
     def executable(self):
         return util.find_executable('run_iuv')
