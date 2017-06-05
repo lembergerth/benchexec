@@ -33,6 +33,7 @@ class Tool(benchexec.tools.template.BaseTool):
                 "iuv",
                 "klee",
                 "crest",
+                "cpatiger",
                 "lib",
                 "run_iuv"
     ] + ['validators/uautomizer/' + p for p in uautomizer.Tool.REQUIRED_PATHS]\
