@@ -35,7 +35,8 @@ class Tool(benchexec.tools.template.BaseTool):
                 "crest",
                 "cpatiger",
                 "lib",
-                "run_iuv"
+                "run_iuv",
+                "ReachSafety.prp"
     ] + ['validators/uautomizer/' + p for p in uautomizer.Tool.REQUIRED_PATHS]\
       + ['validators/cpachecker/' + p for p in cpachecker.Tool.REQUIRED_PATHS]
 
