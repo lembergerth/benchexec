@@ -64,7 +64,7 @@ LIB_URL = "https://cdn.jsdelivr.net"
 LIB_URL_OFFLINE = "lib/javascript"
 
 TEMPLATE_FILE_NAME = os.path.join(os.path.dirname(__file__), 'template.{format}')
-TEMPLATE_FORMATS = ['html', 'csv']
+TEMPLATE_FORMATS = ['csv', 'html']
 TEMPLATE_ENCODING = 'UTF-8'
 TEMPLATE_NAMESPACE={
    'flatten': Util.flatten,
