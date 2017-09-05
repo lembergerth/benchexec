@@ -23,10 +23,12 @@ import benchexec.tools.template
 import benchexec.tools.ultimateautomizer as uautomizer
 import benchexec.tools.cpachecker as cpachecker
 
+from benchexec.model import SOFTTIMELIMIT
 
 class Tool(benchexec.tools.template.BaseTool):
     """
-    Tool info for IUV (Input Using Verifier) .
+    Tool info for TBF (Test-based falsifier) .
+    'iuv' was its early-phase project name.
     """
 
     REQUIRED_PATHS = [
@@ -34,24 +36,18 @@ class Tool(benchexec.tools.template.BaseTool):
                 "klee",
                 "crest",
                 "cpatiger",
+                "random",
+                "afl",
+                "fshell",
                 "lib",
                 "run_iuv",
                 "ReachSafety.prp"
-    ] + ['validators/uautomizer/' + p for p in uautomizer.Tool.REQUIRED_PATHS]\
-      + ['validators/cpachecker/' + p for p in cpachecker.Tool.REQUIRED_PATHS]
+    ] + ['validators/cpachecker/' + p for p in cpachecker.Tool.REQUIRED_PATHS]
 
     def executable(self):
         return util.find_executable('run_iuv')
 
-
     def version(self, executable):
-        """
-        The output looks like this:
-        IUV 0.1, using:
-        KLEE 0.2.0 (https://klee.github.io),
-        CREST f5ff7fc (http://www.burn.im/crest),
-        LLVM version 3.4.2
-        """
         stdout = self._version_from_tool(executable)
         return stdout.strip()
 
@@ -73,10 +69,10 @@ class Tool(benchexec.tools.template.BaseTool):
         for line in reversed(output):
             if line.startswith('ERROR:'):
                 return "ERROR ({0})".format(returncode)
-            elif line.startswith('IUV: FALSE'):
+            elif line.startswith('IUV') and 'FALSE' in line:
                 return result.RESULT_FALSE_REACH
-            elif line.startswith('IUV: TRUE'):
-                return result.RESULT_TRUE
+            elif line.startswith('IUV') and 'TRUE' in line:
+                return result.RESULT_TRUE_PROP
         return result.RESULT_UNKNOWN
 
     def get_value_from_output(self, lines, identifier):
@@ -86,3 +82,12 @@ class Tool(benchexec.tools.template.BaseTool):
           end = line.find('(', start)
           return line[start:end].strip()
       return None
+
+    def cmdline(self, executable, options, tasks, propertyfile=None, rlimits={}):
+        if SOFTTIMELIMIT in rlimits:
+            if "--timelimit" in options:
+                logging.warning('Time limit already specified in command-line options, not adding time limit from benchmark definition to the command line.')
+            else:
+                options = options + ["--timelimit", str(rlimits[SOFTTIMELIMIT])]
+
+        return super().cmdline(executable, options, tasks, propertyfile, rlimits)
