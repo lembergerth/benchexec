@@ -68,7 +68,10 @@ class Tool(benchexec.tools.template.BaseTool):
         """
         for line in reversed(output):
             if line.startswith('ERROR:'):
-                return "ERROR ({0})".format(returncode)
+                if 'timeout' in line.lower():
+                    return "TIMEOUT"
+                else:
+                    return "ERROR ({0})".format(returncode)
             elif line.startswith('IUV') and 'FALSE' in line:
                 return result.RESULT_FALSE_REACH
             elif line.startswith('IUV') and 'TRUE' in line:
